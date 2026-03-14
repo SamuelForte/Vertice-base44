@@ -1,29 +1,11 @@
 import { supabase, isSupabaseEnabled } from "@/lib/supabaseClient"
 
-const DEFAULT_ADMIN_EMAIL = "admin@verticecp.com"
-
 function isBrowser() {
   return typeof window !== "undefined"
 }
 
-function getAllowedAdminEmails() {
-  const raw = import.meta.env.VITE_ADMIN_ALLOWED_EMAILS || DEFAULT_ADMIN_EMAIL
-  return String(raw)
-    .split(",")
-    .map((email) => email.trim().toLowerCase())
-    .filter(Boolean)
-}
-
 function hasAdminAccess(user) {
-  if (!user) return false
-
-  const role = user.app_metadata?.role || user.user_metadata?.role
-  if (role === "admin") {
-    return true
-  }
-
-  const email = user.email?.toLowerCase()
-  return !!email && getAllowedAdminEmails().includes(email)
+  return Boolean(user)
 }
 
 export async function isAdminAuthenticated() {
@@ -61,7 +43,7 @@ export async function loginAdmin({ email, password }) {
     await supabase.auth.signOut()
     return {
       ok: false,
-      error: "Usuário autenticado sem permissão de administrador",
+      error: "Usuário autenticado sem permissão",
     }
   }
 
@@ -79,5 +61,5 @@ export async function logoutAdmin() {
 }
 
 export function getAdminHintEmail() {
-  return getAllowedAdminEmails()[0] || DEFAULT_ADMIN_EMAIL
+  return "Qualquer usuário autenticado no Supabase"
 }

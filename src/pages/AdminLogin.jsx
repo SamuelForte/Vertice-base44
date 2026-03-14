@@ -86,7 +86,7 @@ export default function AdminLogin() {
 
             <div className="mt-6 rounded-lg bg-slate-100 p-3 text-xs text-slate-600">
               <p>
-                O e-mail <strong>{getAdminHintEmail()}</strong> deve existir em Authentication {'>'} Users no Supabase.
+                O usuário deve existir em Authentication {'>'} Users no Supabase.
               </p>
             </div>
           </CardContent>
