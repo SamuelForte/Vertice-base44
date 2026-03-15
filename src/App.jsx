@@ -51,6 +51,33 @@ function RequireAdmin({ children }) {
   return children
 }
 
+function PublicOnly({ children }) {
+  const [status, setStatus] = useState("checking")
+
+  useEffect(() => {
+    let mounted = true
+
+    isAdminAuthenticated().then((allowed) => {
+      if (!mounted) return
+      setStatus(allowed ? "admin" : "public")
+    })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  if (status === "checking") {
+    return <div className="px-4 py-10 text-center text-sm text-slate-500">Carregando...</div>
+  }
+
+  if (status === "admin") {
+    return <Navigate to="/admin" replace />
+  }
+
+  return children
+}
+
 export default function App() {
   const location = useLocation()
   const currentPage = getCurrentPage(location.pathname)
@@ -58,12 +85,54 @@ export default function App() {
   return (
     <Layout currentPage={currentPage}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/editais" element={<Editais />} />
-        <Route path="/edital" element={<EditalDetalhes />} />
-        <Route path="/contato" element={<Contato />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/"
+          element={
+            <PublicOnly>
+              <Home />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/sobre"
+          element={
+            <PublicOnly>
+              <Sobre />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/editais"
+          element={
+            <PublicOnly>
+              <Editais />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/edital"
+          element={
+            <PublicOnly>
+              <EditalDetalhes />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/contato"
+          element={
+            <PublicOnly>
+              <Contato />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/admin/login"
+          element={
+            <PublicOnly>
+              <AdminLogin />
+            </PublicOnly>
+          }
+        />
         <Route
           path="/admin"
           element={

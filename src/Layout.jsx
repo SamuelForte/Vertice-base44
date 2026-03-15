@@ -5,6 +5,8 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 
 export default function Layout({ children, currentPage }) {
+  const isAdminContext = currentPage === "Admin" || currentPage === "AdminEditais" || currentPage === "AdminLogin"
+
   const { data: configs = [] } = useQuery({
     queryKey: ["site-config-all"],
     queryFn: () => base44.entities.SiteConfig.list(),
@@ -37,11 +39,11 @@ export default function Layout({ children, currentPage }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <Header currentPage={currentPage} />
-      <div className="flex-1 w-full pt-20 lg:pt-24">
+      {!isAdminContext && <Header currentPage={currentPage} />}
+      <div className={`flex-1 w-full ${isAdminContext ? "" : "pt-20 lg:pt-24"}`}>
         {children}
       </div>
-      <Footer />
+      {!isAdminContext && <Footer />}
     </div>
   )
 }
