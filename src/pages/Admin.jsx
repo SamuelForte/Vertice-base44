@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import MensagensManager from "@/components/admin/MensagensManager";
 import { logoutAdmin } from "@/lib/admin-auth";
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingEdital, setEditingEdital] = useState(null);
@@ -74,7 +76,7 @@ export default function Admin() {
   const handleLogout = async () => {
     await logoutAdmin();
     toast.success("Sessão encerrada");
-    window.location.href = "/admin/login";
+    navigate("/", { replace: true });
   };
 
   const filteredEditais = editais.filter((edital) => {
