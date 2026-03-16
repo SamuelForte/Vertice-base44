@@ -132,7 +132,7 @@ export default function Contato() {
                       </div>
                       <div>
                         <h3 className="font-medium text-slate-900 mb-1">Endereço</h3>
-                        <p className="text-slate-600 text-sm">Fortaleza - CE</p>
+                        <p className="text-slate-600 text-sm">Av. Pontes Vieira, 1079 - Sala 18, Fortaleza-CE</p>
                       </div>
                     </CardContent>
                   </Card>
