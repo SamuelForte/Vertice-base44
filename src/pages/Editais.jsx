@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
@@ -10,7 +11,8 @@ import EditalFilters from "@/components/editais/EditalFilters";
 import EmptyState from "@/components/editais/EmptyState";
 
 export default function Editais() {
-  const urlParams = new URLSearchParams(window.location.search);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
   
   const [filters, setFilters] = useState({
     busca: "",
