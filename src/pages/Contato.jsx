@@ -120,7 +120,7 @@ export default function Contato() {
                       </div>
                       <div>
                         <h3 className="font-medium text-slate-900 mb-1">Telefone</h3>
-                        <p className="text-slate-600 text-sm">(85) 9 8744-7082<br />(88) 9 9909-6360</p>
+                        <p className="text-slate-600 text-sm">(85) 991687462</p>
                       </div>
                     </CardContent>
                   </Card>
